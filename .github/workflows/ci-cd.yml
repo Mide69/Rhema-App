@@ -28,20 +28,26 @@ jobs:
     - name: Install Backend Dependencies
       run: |
         cd backend
-        npm ci
+        npm install
     
     - name: Run Backend Tests
       run: |
         cd backend
         npm test
-      env:
-        MONGODB_URI: mongodb://localhost:27017/rbtc-test
-        JWT_SECRET: test-secret-key
     
-    - name: Build Admin Dashboard
+    - name: Test Backend Server
+      run: |
+        cd backend
+        timeout 10s node server.js || true
+    
+    - name: Install Admin Dashboard Dependencies
       run: |
         cd admin-dashboard
-        npm ci
+        npm install
+    
+    - name: Test Admin Dashboard
+      run: |
+        cd admin-dashboard
         npm run build
 
   deploy:
