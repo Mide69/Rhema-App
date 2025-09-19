@@ -1,0 +1,21 @@
+{
+  "name": "rbtc-nigeria-app",
+  "version": "1.0.0",
+  "description": "RBTC Nigeria Student App - Mobile and Web Platform",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run mobile\" \"npm run admin\"",
+    "backend": "cd backend && npm run dev",
+    "mobile": "cd mobile && npm start",
+    "admin": "cd admin-dashboard && npm start",
+    "install-all": "npm install && cd backend && npm install && cd ../mobile && npm install && cd ../admin-dashboard && npm install",
+    "build": "cd backend && npm run build && cd ../admin-dashboard && npm run build",
+    "test": "cd backend && npm test && cd ../mobile && npm test"
+  },
+  "keywords": ["rbtc", "nigeria", "student", "education", "mobile", "react-native"],
+  "author": "RBTC Nigeria Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
