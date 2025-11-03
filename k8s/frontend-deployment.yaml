@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rbtc-frontend
+  namespace: rbtc-production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rbtc-frontend
+  template:
+    metadata:
+      labels:
+        app: rbtc-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: rbtc/frontend:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rbtc-frontend-service
+  namespace: rbtc-production
+spec:
+  selector:
+    app: rbtc-frontend
+  ports:
+  - port: 80
+    targetPort: 3000
+  type: LoadBalancer

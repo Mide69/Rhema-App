@@ -3,92 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RBTC Nigeria Student App</title>
+    <title>RBTC Nigeria - Student Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { background: #1E88E5; color: white; padding: 20px; text-align: center; }
-        .card { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .btn { background: #1E88E5; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-        .btn:hover { background: #1976D2; }
-        .status { padding: 10px; border-radius: 4px; margin: 10px 0; }
-        .success { background: #E8F5E8; color: #2E7D32; }
-        .error { background: #FFEBEE; color: #C62828; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 0.8; }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(30,60,114,0.9), rgba(42,82,152,0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f0f0" width="1200" height="600"/><text x="600" y="300" text-anchor="middle" fill="%23ddd" font-size="48">RBTC Campus</text></svg>'); 
+                 background-size: cover; color: white; text-align: center; padding: 4rem 2rem; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 12px 24px; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #28a745; color: white; }
+        .btn-secondary { background: transparent; color: white; border: 2px solid white; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        
+        /* Main Content */
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333; }
+        
+        /* Quick Access Cards */
+        .quick-access { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .access-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+        .access-card:hover { transform: translateY(-5px); }
+        .access-card i { font-size: 3rem; color: #2a5298; margin-bottom: 1rem; }
+        .access-card h3 { font-size: 1.3rem; margin-bottom: 1rem; color: #333; }
+        .access-card p { color: #666; margin-bottom: 1.5rem; line-height: 1.6; }
+        
+        /* Student Dashboard Preview */
+        .dashboard-preview { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 3rem; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .user-info { display: flex; align-items: center; gap: 1rem; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: #2a5298; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .stat-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: bold; color: #2a5298; }
+        .stat-label { color: #666; margin-top: 0.5rem; }
+        
+        /* Announcements */
+        .announcements { background: #fff3cd; border-left: 4px solid #ffc107; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+        .announcements h3 { color: #856404; margin-bottom: 1rem; }
+        .announcement-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #ffeaa7; }
+        .announcement-item:last-child { border-bottom: none; margin-bottom: 0; }
+        
+        /* Footer */
+        .footer { background: #333; color: white; text-align: center; padding: 2rem; }
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+        .campus-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .campus { text-align: center; }
+        .campus h4 { color: #2a5298; margin-bottom: 0.5rem; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav { flex-direction: column; gap: 1rem; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+            .hero h1 { font-size: 2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .dashboard-header { flex-direction: column; gap: 1rem; text-align: center; }
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>RBTC Nigeria Student App</h1>
-        <p>Rhema Bible Training College - Student Portal</p>
-    </div>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>RBTC Nigeria</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#admissions">Admissions</a></li>
+                <li><a href="#student-portal">Student Portal</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="container">
-        <div class="card">
-            <h2>Welcome to RBTC Nigeria</h2>
-            <p>Your comprehensive student management system for Rhema Bible Training College Nigeria.</p>
-            <div id="status" class="status"></div>
-            <button class="btn" onclick="testAPI()">Test API Connection</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Rhema Bible Training College</h1>
+        <p>Empowering Students for Ministry Excellence Across Nigeria</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-primary" onclick="showLogin()">Student Login</a>
+            <a href="#" class="btn btn-secondary" onclick="showAdmissions()">Apply Now</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Announcements -->
+        <div class="announcements">
+            <h3><i class="fas fa-bullhorn"></i> Latest Announcements</h3>
+            <div class="announcement-item">
+                <strong>Registration Open:</strong> 2024 Academic Session registration is now open. Apply before March 31st.
+            </div>
+            <div class="announcement-item">
+                <strong>Exam Schedule:</strong> Mid-semester examinations will commence on February 15th, 2024.
+            </div>
         </div>
 
-        <div class="grid">
-            <div class="card">
-                <h3>🎓 Student Portal</h3>
-                <p>Access your courses, assignments, and academic progress.</p>
-                <button class="btn" onclick="alert('Student login coming soon!')">Student Login</button>
+        <h2 class="section-title">Student Services</h2>
+        
+        <!-- Quick Access Cards -->
+        <div class="quick-access">
+            <div class="access-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Student Portal</h3>
+                <p>Access your academic records, course materials, and track your progress</p>
+                <button class="btn btn-primary" onclick="showLogin()">Access Portal</button>
             </div>
-
-            <div class="card">
-                <h3>💳 Payments</h3>
-                <p>Pay tuition fees, tithes, and donations securely.</p>
-                <button class="btn" onclick="alert('Payment system coming soon!')">Make Payment</button>
+            
+            <div class="access-card">
+                <i class="fas fa-book-open"></i>
+                <h3>Course Catalog</h3>
+                <p>Browse available courses, prerequisites, and academic programs</p>
+                <button class="btn btn-primary" onclick="showCourses()">View Courses</button>
             </div>
-
-            <div class="card">
-                <h3>📚 Courses</h3>
-                <p>Browse available courses and enroll in new programs.</p>
-                <button class="btn" onclick="alert('Course catalog coming soon!')">View Courses</button>
+            
+            <div class="access-card">
+                <i class="fas fa-credit-card"></i>
+                <h3>Fee Payment</h3>
+                <p>Pay tuition fees, make donations, and manage your financial records</p>
+                <button class="btn btn-primary" onclick="showPayments()">Make Payment</button>
             </div>
-
-            <div class="card">
-                <h3>📱 Mobile App</h3>
-                <p>Download our mobile app for iOS and Android.</p>
-                <button class="btn" onclick="alert('Mobile app coming soon!')">Download App</button>
+            
+            <div class="access-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Academic Calendar</h3>
+                <p>View important dates, exam schedules, and academic events</p>
+                <button class="btn btn-primary" onclick="showCalendar()">View Calendar</button>
             </div>
-
-            <div class="card">
-                <h3>🏫 Campuses</h3>
-                <p>Lagos • Ibadan • Abuja • Port Harcourt</p>
-                <button class="btn" onclick="alert('Campus info coming soon!')">Campus Info</button>
+            
+            <div class="access-card">
+                <i class="fas fa-video"></i>
+                <h3>Live Classes</h3>
+                <p>Join live lectures, chapel services, and special events online</p>
+                <button class="btn btn-primary" onclick="showLiveStream()">Join Live</button>
             </div>
-
-            <div class="card">
-                <h3>⚙️ Admin Panel</h3>
-                <p>Administrative dashboard for staff and instructors.</p>
-                <button class="btn" onclick="alert('Admin panel coming soon!')">Admin Login</button>
+            
+            <div class="access-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile App</h3>
+                <p>Download our mobile app for iOS and Android devices</p>
+                <button class="btn btn-primary" onclick="showMobileApp()">Download</button>
             </div>
         </div>
-    </div>
+
+        <!-- Student Dashboard Preview -->
+        <div class="dashboard-preview">
+            <div class="dashboard-header">
+                <div class="user-info">
+                    <div class="avatar">JS</div>
+                    <div>
+                        <h3>Welcome, John Student</h3>
+                        <p>Student ID: RBTC2024LAG0001 | Lagos Campus</p>
+                    </div>
+                </div>
+                <div id="api-status" style="padding: 8px 16px; border-radius: 4px; font-size: 0.9rem;"></div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Enrolled Courses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Average Grade</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Pending Assignments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₦45,000</div>
+                    <div class="stat-label">Outstanding Fees</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="campus-info">
+                <div class="campus">
+                    <h4>Lagos Campus</h4>
+                    <p>Main Campus<br>Victoria Island, Lagos</p>
+                </div>
+                <div class="campus">
+                    <h4>Ibadan Campus</h4>
+                    <p>Oyo State<br>Ring Road, Ibadan</p>
+                </div>
+                <div class="campus">
+                    <h4>Abuja Campus</h4>
+                    <p>Federal Capital Territory<br>Wuse District, Abuja</p>
+                </div>
+                <div class="campus">
+                    <h4>Port Harcourt Campus</h4>
+                    <p>Rivers State<br>GRA, Port Harcourt</p>
+                </div>
+            </div>
+            <p>&copy; 2024 Rhema Bible Training College Nigeria. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        async function testAPI() {
-            const statusDiv = document.getElementById('status');
-            statusDiv.textContent = 'Testing API connection...';
-            statusDiv.className = 'status';
-            
+        // API Status Check
+        async function checkAPIStatus() {
+            const statusDiv = document.getElementById('api-status');
             try {
                 const response = await fetch('http://localhost:8080/api/test');
                 const data = await response.json();
-                statusDiv.textContent = `✅ API Connected: ${data.message}`;
-                statusDiv.className = 'status success';
+                statusDiv.textContent = '🟢 System Online';
+                statusDiv.style.background = '#d4edda';
+                statusDiv.style.color = '#155724';
             } catch (error) {
-                statusDiv.textContent = `❌ API Connection Failed: ${error.message}`;
-                statusDiv.className = 'status error';
+                statusDiv.textContent = '🔴 System Offline';
+                statusDiv.style.background = '#f8d7da';
+                statusDiv.style.color = '#721c24';
             }
         }
 
-        window.onload = () => testAPI();
+        // Navigation Functions
+        function showLogin() {
+            alert('🎓 Student Login\n\nFeatures:\n• Access course materials\n• View grades and transcripts\n• Submit assignments\n• Track academic progress\n\nComing soon in Phase 2!');
+        }
+
+        function showCourses() {
+            alert('📚 Course Catalog\n\nAvailable Programs:\n• Theology & Biblical Studies\n• Ministry & Leadership\n• Pastoral Care\n• Evangelism\n• Christian Education\n\nComing soon!');
+        }
+
+        function showPayments() {
+            alert('💳 Payment Portal\n\nPayment Options:\n• Tuition Fees\n• Registration Fees\n• Tithes & Offerings\n• Donations\n\nSecure payment with Paystack/Flutterwave\nComing soon!');
+        }
+
+        function showCalendar() {
+            alert('📅 Academic Calendar\n\n2024 Key Dates:\n• Registration: Jan 15 - Mar 31\n• Classes Begin: April 1\n• Mid-term Exams: June 15-22\n• Final Exams: August 15-29\n\nComing soon!');
+        }
+
+        function showLiveStream() {
+            alert('📺 Live Streaming\n\nUpcoming Events:\n• Sunday Service: 10:00 AM\n• Wednesday Bible Study: 6:00 PM\n• Special Lectures: TBA\n\nComing soon!');
+        }
+
+        function showMobileApp() {
+            alert('📱 RBTC Mobile App\n\nFeatures:\n• Offline course access\n• Push notifications\n• Mobile payments\n• Campus maps\n\nDownload from App Store & Google Play\nComing soon!');
+        }
+
+        function showAdmissions() {
+            alert('📝 Admissions\n\nRequirements:\n• Secondary school certificate\n• Recommendation letters\n• Application fee: ₦5,000\n• Interview (online/in-person)\n\nApply online today!');
+        }
+
+        // Initialize
+        window.onload = () => {
+            checkAPIStatus();
+            setInterval(checkAPIStatus, 30000); // Check every 30 seconds
+        };
     </script>
 </body>
 </html>
