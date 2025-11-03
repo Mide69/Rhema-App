@@ -1,53 +1,43 @@
 const http = require('http');
 const url = require('url');
 
-const PORT = process.env.PORT || 3001;
+const PORT = 8080;
 
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
-  const path = parsedUrl.pathname;
   
-  // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Content-Type', 'application/json');
 
-  if (path === '/api/test') {
+  if (parsedUrl.pathname === '/') {
     res.writeHead(200);
     res.end(JSON.stringify({
-      message: 'RBTC Nigeria API is running!',
-      timestamp: new Date().toISOString(),
-      status: 'OK',
-      version: '1.0.0'
+      message: 'RBTC Nigeria Student App API',
+      status: 'Running',
+      endpoints: ['/api/test', '/health']
     }));
-  } else if (path === '/health') {
+  } else if (parsedUrl.pathname === '/api/test') {
     res.writeHead(200);
     res.end(JSON.stringify({
-      status: 'OK',
+      message: 'API is working!',
       timestamp: new Date().toISOString()
     }));
+  } else if (parsedUrl.pathname === '/health') {
+    res.writeHead(200);
+    res.end(JSON.stringify({ status: 'OK' }));
   } else {
     res.writeHead(404);
-    res.end(JSON.stringify({
-      message: 'Route not found',
-      availableRoutes: ['/api/test', '/health']
-    }));
+    res.end(JSON.stringify({ error: 'Not found' }));
   }
 });
 
 server.listen(PORT, () => {
-  console.log(`🚀 RBTC Nigeria API Server running on port ${PORT}`);
-  console.log(`📍 Test endpoint: http://localhost:${PORT}/api/test`);
-  console.log(`❤️  Health check: http://localhost:${PORT}/health`);
-  console.log('✅ Backend server is ready for development!');
+  console.log(`Server running at http://localhost:${PORT}`);
 });
 
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    console.log(`❌ Port ${PORT} is already in use. Trying port ${PORT + 1}...`);
+    console.log(`Port ${PORT} in use, trying ${PORT + 1}`);
     server.listen(PORT + 1);
-  } else {
-    console.error('Server error:', err);
   }
 });
