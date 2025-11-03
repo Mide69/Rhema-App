@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: rbtc/frontend:latest
+        image: tektribe/rbtc-frontend:latest
         ports:
         - containerPort: 3000
         resources:

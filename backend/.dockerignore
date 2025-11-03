@@ -1,0 +1,12 @@
+node_modules
+.env
+.env.example
+*.log
+.git
+middleware
+models
+routes
+controllers
+utils
+config
+package-lock.json

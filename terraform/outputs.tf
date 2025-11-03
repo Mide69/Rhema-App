@@ -1,14 +1,14 @@
-output "cluster_endpoint" {
-  description = "EKS cluster endpoint"
-  value       = aws_eks_cluster.rbtc_cluster.endpoint
+output "frontend_url" {
+  description = "Frontend application URL"
+  value       = "http://localhost:3000"
 }
 
-output "cluster_name" {
-  description = "EKS cluster name"
-  value       = aws_eks_cluster.rbtc_cluster.name
+output "backend_url" {
+  description = "Backend API URL"
+  value       = "http://localhost:8080"
 }
 
-output "database_endpoint" {
-  description = "RDS instance endpoint"
-  value       = aws_db_instance.rbtc_db.endpoint
+output "database_url" {
+  description = "MongoDB connection URL"
+  value       = "mongodb://admin:password123@localhost:27017"
 }
