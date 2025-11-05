@@ -1,0 +1,9 @@
+{
+  "name": "rbtc-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js",
+    "build": "mkdir -p build && cp index.html build/ && cp -r assets build/ 2>/dev/null || true"
+  },
+  "dependencies": {}
+}
